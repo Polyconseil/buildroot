@@ -1,15 +1,22 @@
-We need to build u-boot tools without a board configuration for the target.
-fw_env just uses config.h to define the default environment of the created
-image, so it really isn't mandatory.
-
-Signed-off-by: Gustavo Zacarias <gustavo@zacarias.com.ar>
-
+diff --git a/tools/env/Makefile b/tools/env/Makefile
+index 0e798e0..3a71fd5 100644
+--- a/tools/env/Makefile
++++ b/tools/env/Makefile
+@@ -26,7 +26,7 @@ include $(TOPDIR)/config.mk
+ HOSTSRCS := $(SRCTREE)/lib/crc32.c  fw_env.c  fw_env_main.c
+ HOSTSRCS += $(SRCTREE)/lib/ctype.c $(SRCTREE)/lib/linux_string.c
+ HOSTSRCS += $(SRCTREE)/common/env_attr.c $(SRCTREE)/common/env_flags.c
+-HEADERS	:= fw_env.h $(OBJTREE)/include/config.h
++HEADERS	:= fw_env.h
+ 
+ # Compile for a hosted environment on the target
+ HOSTCPPFLAGS  = -idirafter $(SRCTREE)/include \
 diff --git a/tools/env/fw_env.h b/tools/env/fw_env.h
-index aff471b..dfe7439 100644
+index a1a6807..b16cb59 100644
 --- a/tools/env/fw_env.h
 +++ b/tools/env/fw_env.h
-@@ -5,14 +5,6 @@
-  * SPDX-License-Identifier:	GPL-2.0+
+@@ -21,15 +21,6 @@
+  * MA 02111-1307 USA
   */
  
 -/* Pull in the current config to define the default environment */
@@ -20,6 +27,7 @@ index aff471b..dfe7439 100644
 -#else
 -#include <config.h>
 -#endif
- 
+-
  /*
   * To build the utility with the static configuration
+  * comment out the next line.
